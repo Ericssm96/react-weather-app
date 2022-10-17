@@ -16,7 +16,17 @@ export default function Search({ onSearchChange }) {
       geoApiOptions
     )
       .then((response) => response.json())
-      .then((response) => console.log(response))
+      .then((response) => {
+        return {
+          options: response.data.map((city) => {
+            console.log(city);
+            return {
+              value: `${city.latitude} ${city.longitude}`, // this is neecessary because the weather api works with latitude and loogitude
+              label: `${city.name}-${city.regionCode}, ${city.countryCode}`,
+            };
+          }),
+        };
+      })
       .catch((err) => console.error(err));
   };
 
